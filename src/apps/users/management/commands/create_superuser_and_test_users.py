@@ -24,7 +24,7 @@ class Command(BaseCommand):
         # Create test users data
         first_names = [FAKE.unique.first_name() for _ in range(TEST_USER_QUANTITY)]
         last_names = [FAKE.unique.last_name() for _ in range(TEST_USER_QUANTITY)]
-        emails = [FAKE.unique.last_name() for _ in range(TEST_USER_QUANTITY)]
+        emails = [FAKE.unique.email() for _ in range(TEST_USER_QUANTITY)]
         passwords = [FAKE.unique.password() for _ in range(TEST_USER_QUANTITY)]
 
         # Create test users
