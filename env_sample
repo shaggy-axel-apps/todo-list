@@ -1,0 +1,6 @@
+# SUPERUSER CREDS
+USERNAME=testsuperuser
+EMAIL=testsuperuser@mail.ru
+FIRST_NAME=Test
+LAST_NAME=Superuser
+PASSWORD=testsuperuser
