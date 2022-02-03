@@ -2,8 +2,11 @@
 
 # Installation
 ```bash
-# clone
+# clone repo
 git clone git@github.com:shaggy-axel/todo-list.git && cd todo-list/
+cat env_sample >> .env # change values for superuser in .env
+
+# create virtualenv and activate
 python3 -m venv .venv
 . .venv/bin/activate
 

@@ -1,5 +1,10 @@
+import os
 from pathlib import Path
 
+from dotenv import load_dotenv
+
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -22,6 +27,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # third party
+    'django_extensions',
     'rest_framework',
 
     # my apps
@@ -111,3 +117,13 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Always use IPython for shell_plus
+SHELL_PLUS = "ipython"
+
+# SUPERUSER CREDS
+USERNAME = os.environ.get("USERNAME")
+EMAIL = os.environ.get("EMAIL")
+FIRST_NAME = os.environ.get("FIRST_NAME")
+LAST_NAME = os.environ.get("LAST_NAME")
+PASSWORD = os.environ.get("PASSWORD")
