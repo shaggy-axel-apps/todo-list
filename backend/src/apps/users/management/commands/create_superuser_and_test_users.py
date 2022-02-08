@@ -5,7 +5,7 @@ from django.core.management.base import BaseCommand
 from faker import Faker
 
 
-TEST_USER_QUANTITY = 10
+TEST_USER_QUANTITY = 100
 FAKE = Faker()
 User = get_user_model()
 
@@ -37,6 +37,6 @@ class Command(BaseCommand):
 
         self.stdout.write(self.style.SUCCESS(
             f'Successfully created 🎉\n'
-            f'Admin creds:\n  username: {self.USERNAME}\n  '
-            f'email: {self.EMAIL}\n  password: {self.PASSWORD}'
+            f'Admin creds:\n  username: {settings.USERNAME}\n  '
+            f'email: {settings.EMAIL}\n  password: {settings.PASSWORD}'
         ))

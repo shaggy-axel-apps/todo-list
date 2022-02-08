@@ -25,4 +25,4 @@ jobs:
         # python -m pip install docker docker-compose
     - name: Lint with flake8
       run: |
-        flake8 src/ --exclude=migrations,__pycache__ --max-line-length 120
+        flake8 backend/src/ --exclude=migrations,__pycache__ --max-line-length 120
