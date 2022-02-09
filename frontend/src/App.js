@@ -1,8 +1,14 @@
 import axios from 'axios';
+import 'bootstrap/dist/css/bootstrap.min.css'
 import React from 'react';
 import './App.css';
 
+import NavBar from './components/NavBar';
+import Footer from './components/Footer';
 import UserList from './components/User';
+
+
+const BASE_URL = "http://127.0.0.1:8001/"
 
 class App extends React.Component {
 
@@ -14,7 +20,7 @@ class App extends React.Component {
   };
 
   componentDidMount() {
-    axios.get("http://127.0.0.1:8001/api/users/").then(response => {
+    axios.get(`${BASE_URL}api/users/`).then(response => {
       this.setState({"users": response.data.results})
       console.log(response.data)
       console.log(response.data.results)
@@ -23,8 +29,10 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>
-        <UserList users={this.state.users}/>
+      <div className='app'>
+          <NavBar/>
+          <UserList users={this.state.users}/>
+          <Footer/>
       </div>
     );
   };
