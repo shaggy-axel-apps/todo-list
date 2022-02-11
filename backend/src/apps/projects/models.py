@@ -20,6 +20,6 @@ class Issue(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField(null=True, blank=True)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
-    labels = models.ManyToManyField(Label)
+    labels = models.ManyToManyField(Label, blank=True)
     assignees = models.ManyToManyField(User)
     is_open = models.BooleanField(default=True)
