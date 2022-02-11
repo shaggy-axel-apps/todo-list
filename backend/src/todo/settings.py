@@ -31,9 +31,11 @@ INSTALLED_APPS = [
     'django_extensions',
     'corsheaders',
     'rest_framework',
+    'colorfield',
 
     # my apps
     'apps.users',
+    'apps.projects',
 ]
 
 MIDDLEWARE = [
