@@ -1,5 +1,7 @@
 # ToDo-List App
 
+![Tests](https://github.com/shaggy-axel/todo-list/actions/workflows/linter.yml/badge.svg)
+
 # Installation
 ```bash
 # clone repo
