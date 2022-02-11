@@ -14,7 +14,6 @@ class Label(models.Model):
     title = models.CharField(max_length=32)
     description = models.TextField(null=True, blank=True)
     color = ColorField(format='hexa')
-    assignees = models.ManyToManyField(User)
 
 
 class Issue(models.Model):
@@ -22,3 +21,4 @@ class Issue(models.Model):
     description = models.TextField(null=True, blank=True)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     labels = models.ManyToManyField(Label)
+    assignees = models.ManyToManyField(User)
