@@ -22,3 +22,4 @@ class Issue(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     labels = models.ManyToManyField(Label)
     assignees = models.ManyToManyField(User)
+    is_open = models.BooleanField(default=True)
