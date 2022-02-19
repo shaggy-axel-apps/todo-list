@@ -1,3 +1,4 @@
+from datetime import datetime
 from colorfield.fields import ColorField
 from django.db import models
 
@@ -23,3 +24,5 @@ class Issue(models.Model):
     labels = models.ManyToManyField(Label, blank=True)
     assignees = models.ManyToManyField(User)
     is_open = models.BooleanField(default=True)
+    created = models.DateTimeField(auto_created=True, default=datetime.now)
+    closed = models.DateTimeField(null=True, blank=True)
