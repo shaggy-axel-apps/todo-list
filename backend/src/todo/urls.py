@@ -1,12 +1,12 @@
 from django.contrib import admin
 from django.urls import include, path
-from rest_framework.routers import DefaultRouter
+from rest_framework.routers import SimpleRouter
 
 from apps.users.api.views import UserViewSet
 from apps.projects.api.views import IssueViewSet, ProjectViewSet, LabelViewSet
 
 
-router = DefaultRouter()
+router = SimpleRouter()
 router.register('users', UserViewSet)
 router.register('issues', IssueViewSet)
 router.register('projects', ProjectViewSet)
