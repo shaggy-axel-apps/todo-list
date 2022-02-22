@@ -11,9 +11,8 @@ class ProjectFilter(filters.FilterSet):
 
 
 class IssueFilter(filters.FilterSet):
-    created = filters.DateFilter()
-    closed = filters.DateFilter()
+    created = filters.DateFromToRangeFilter()
 
     class Meta:
         model = Issue
-        fields = ('created', 'closed')
+        fields = ('created',)
