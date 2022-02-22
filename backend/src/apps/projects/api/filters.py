@@ -11,9 +11,13 @@ class ProjectFilter(filters.FilterSet):
 
 
 class IssueFilter(filters.FilterSet):
-    created = filters.DateFilter()
-    closed = filters.DateFilter()
+    min_date = filters.DateFilter(
+        field_name="create", lookup_expr="gte",
+        input_formats=["%Y-%m-%dT%H:%M"])
+    max_date = filters.DateFilter(
+        field_name="create", lookup_expr="lte",
+        input_formats=["%Y-%m-%dT%H:%M"])
 
     class Meta:
         model = Issue
-        fields = ('created', 'closed')
+        fields = ('min_date', 'max_date')

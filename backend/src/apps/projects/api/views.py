@@ -5,7 +5,8 @@ from rest_framework.viewsets import ModelViewSet
 
 from apps.projects.models import Issue, Project, Label
 from .filters import IssueFilter, ProjectFilter
-from .serializers import IssueSerializer, ProjectSerializer, LabelSerializer
+from .serializers import (
+        IssueSerializer, ProjectSerializer, LabelSerializer)
 from .paginations import ProjectPagination, IssuePagination
 
 
@@ -21,7 +22,8 @@ class IssueViewSet(ModelViewSet):
         instance.closed = datetime.now()
         instance.save()
         serializer = self.serializer_class(instance)
-        return Response(data=serializer.data, status=status.HTTP_200_OK)
+        return Response(
+            data=serializer.data, status=status.HTTP_200_OK)
 
 
 class ProjectViewSet(ModelViewSet):
