@@ -55,7 +55,7 @@ class App extends React.Component {
     this.state = {
       users: users,
       projects: projects,
-      issues: issues,
+      issues: issues
     };
   };
 
@@ -74,11 +74,11 @@ class App extends React.Component {
           <BrowserRouter>
             <Routes>
               <Route path={'/'}
-                element={() => <UserList users={this.state.users}/>}/>
+                element={<UserList users={this.state.users}/>}/>
               <Route path={'/projects/'}
-                element={() => <ProjectList projects={this.state.projects}/>}/>
+                element={<ProjectList projects={this.state.projects}/>}/>
               <Route path={'/issues/'}
-                element={() => <IssueList issues={this.state.issues}/>}/>
+                element={<IssueList issues={this.state.issues}/>}/>
               <Route element={pageNotFound404}/>
             </Routes>
           </BrowserRouter>
