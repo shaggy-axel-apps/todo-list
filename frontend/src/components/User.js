@@ -3,8 +3,8 @@ import React from "react";
 
 const UserItem = ({ user }) => {
     return (
-        <tr class='table-primary'>
-            <td class='table-success'>
+        <tr className='table-primary'>
+            <td className='table-success'>
                 {user.username}
             </td>
             <td>
@@ -22,7 +22,7 @@ const UserItem = ({ user }) => {
 
 const UserList = ({ users }) => {
     return (
-        <table class="table table-hover table-dark">
+        <table className="table table-hover table-dark">
             <thead>
                 <th scope="col">
                     <div>Username</div>
