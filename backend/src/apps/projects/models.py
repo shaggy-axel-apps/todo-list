@@ -1,4 +1,5 @@
 from datetime import datetime
+
 from colorfield.fields import ColorField
 from django.db import models
 
@@ -9,6 +10,8 @@ class Project(models.Model):
     title = models.CharField(max_length=64)
     repository = models.URLField("Link to Repository")
     contributors = models.ManyToManyField(User)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name="owner")
+    is_public = models.BooleanField(default=True)
 
     def __str__(self) -> str:
         return self.title
