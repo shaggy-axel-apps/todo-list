@@ -1,13 +1,16 @@
 from datetime import datetime
 from rest_framework import status
 from rest_framework.response import Response
+from rest_framework.permissions import AllowAny, IsAdminUser, IsAuthenticatedOrReadOnly
 from rest_framework.viewsets import ModelViewSet
 
+from apps.users.api.serializers import UserSerializer
 from apps.projects.models import Issue, Project, Label
 from .filters import IssueFilter, ProjectFilter
 from .serializers import (
         IssueSerializer, ProjectSerializer, LabelSerializer)
 from .paginations import ProjectPagination, IssuePagination
+from .permissions import IsOwnerOrReadOnly, IsPublicOrDenied
 
 
 class IssueViewSet(ModelViewSet):
@@ -15,6 +18,7 @@ class IssueViewSet(ModelViewSet):
     serializer_class = IssueSerializer
     pagination_class = IssuePagination
     filterset_class = IssueFilter
+    permission_class = AllowAny
 
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
@@ -31,6 +35,11 @@ class ProjectViewSet(ModelViewSet):
     serializer_class = ProjectSerializer
     pagination_class = ProjectPagination
     filterset_class = ProjectFilter
+    permission_classes = (IsOwnerOrReadOnly, IsPublicOrDenied)
+
+    def create(self, request, *args, **kwargs):
+        request.data['owner'] = UserSerializer(request.user).data
+        return super().create(request, *args, **kwargs)
 
 
 class LabelViewSet(ModelViewSet):

@@ -6,6 +6,7 @@ from apps.users.api.serializers import UserSerializer
 
 class ProjectSerializer(ModelSerializer):
     contributors = UserSerializer(many=True)
+    owner = UserSerializer()
 
     class Meta:
         model = Project
