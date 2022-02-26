@@ -5,7 +5,7 @@ import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css';
 
-import NavBar from './components/NavBar';
+import ResponsiveAppBar from './components/NavBar';
 import Footer from './components/Footer';
 
 import UserList from './components/User';
@@ -50,8 +50,8 @@ class App extends React.Component {
   render() {
     return (
       <div className={'App'}>
-        <NavBar/>
         <BrowserRouter>
+        <ResponsiveAppBar/>
           <Routes>
             <Route path={'/'}
               element={<UserList users={this.state.users}/>}/>
@@ -61,8 +61,8 @@ class App extends React.Component {
               element={<IssueList issues={this.state.issues}/>}/>
             <Route element={pageNotFound404}/>
           </Routes>
-        </BrowserRouter>
         <Footer/>
+        </BrowserRouter>
       </div>
     );
   };
