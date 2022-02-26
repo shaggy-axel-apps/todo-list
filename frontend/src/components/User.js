@@ -36,24 +36,27 @@ const UserItem = ({user}) => {
   const fullName = `${user.firstName} ${user.lastName}`
   return (
     <ListItem alignItems="flex-start">
+
       <ListItemAvatar>
         <Avatar {...stringAvatar(fullName)} />
       </ListItemAvatar>
+
       <ListItemText
         primary={user.username}
         secondary={
         <React.Fragment>
           <Typography
-          sx={{ display: 'inline' }}
-          component="span"
-          variant="body2"
-          color="text.primary"
+            sx={{ display: 'inline' }}
+            component="span"
+            variant="body2"
+            color="text.primary"
           >
-          {user.email}
+            {user.email}
           </Typography>
         </React.Fragment>
         }
       />
+
     </ListItem>
   )
 }
@@ -62,8 +65,7 @@ const UserItem = ({user}) => {
 const UserList = ({users}) => {
   return (
     <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-      {/* {users.map((user) => <UserItem user={user}/>} */}
-      {users.map((user) => <UserItem user={user} />)}
+      {users.map((user) => <UserItem key={user.id} user={user} />)}
     </List>
   );
 }
