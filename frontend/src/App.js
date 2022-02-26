@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React from 'react';
-import {BrowserRouter, Route, Routes} from 'react-router-dom'
+import {BrowserRouter, Route, Routes} from 'react-router-dom';
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css';
@@ -13,7 +13,7 @@ import ProjectList from './components/Project';
 import IssueList from './components/Issue';
 
 
-const BASE_URL = "http://127.0.0.1:8000/"
+const BASE_URL = "http://127.0.0.1:8000/api/"
 
 const pageNotFound404 = ({location}) => {
   return (
@@ -25,6 +25,7 @@ class App extends React.Component {
 
   constructor(props) {
     super(props)
+
     this.state = {
       users: [],
       projects: [],
@@ -33,13 +34,15 @@ class App extends React.Component {
   };
 
   componentDidMount() {
-    axios.get(`${BASE_URL}api/users/`).then(response => {
+    axios.get(`${BASE_URL}users/`).then(response => {
       this.setState({"users": response.data.results})
     }).catch(error => console.log(error))
-    axios.get(`${BASE_URL}api/projects/`).then(response => {
+
+    axios.get(`${BASE_URL}projects/`).then(response => {
       this.setState({"projects": response.data.results})
     }).catch(error => console.log(error))
-    axios.get(`${BASE_URL}api/issues/`).then(response => {
+
+    axios.get(`${BASE_URL}issues/`).then(response => {
       this.setState({"issues": response.data.results})
     }).catch(error => console.log(error))
   };
@@ -48,17 +51,17 @@ class App extends React.Component {
     return (
       <div className={'App'}>
         <NavBar/>
-          <BrowserRouter>
-            <Routes>
-              <Route path={'/'}
-                element={<UserList users={this.state.users}/>}/>
-              <Route path={'/projects/'}
-                element={<ProjectList projects={this.state.projects}/>}/>
-              <Route path={'/issues/'}
-                element={<IssueList issues={this.state.issues}/>}/>
-              <Route element={pageNotFound404}/>
-            </Routes>
-          </BrowserRouter>
+        <BrowserRouter>
+          <Routes>
+            <Route path={'/'}
+              element={<UserList users={this.state.users}/>}/>
+            <Route path={'/projects/'}
+              element={<ProjectList projects={this.state.projects}/>}/>
+            <Route path={'/issues/'}
+              element={<IssueList issues={this.state.issues}/>}/>
+            <Route element={pageNotFound404}/>
+          </Routes>
+        </BrowserRouter>
         <Footer/>
       </div>
     );
