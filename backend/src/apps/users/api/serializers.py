@@ -6,4 +6,10 @@ from apps.users.models import User
 class UserSerializer(ModelSerializer):
     class Meta:
         model = User
-        fields = ('username', 'email', 'first_name', 'last_name')
+        fields = ('id', 'username', 'email', 'first_name', 'last_name')
+
+
+class UserDetailSerializer(ModelSerializer):
+    class Meta:
+        model = User
+        exclude = ('id',)
