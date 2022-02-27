@@ -1,51 +1,47 @@
 import * as React from 'react';
 import {Link} from 'react-router-dom';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
+
+import {
+  AppBar, Box, Toolbar, IconButton, Typography,
+  Menu, Container, Button, MenuItem} from '@mui/material';
+
 import MenuIcon from '@mui/icons-material/Menu';
-import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
-import MenuItem from '@mui/material/MenuItem';
 
 import logo from "../duck.png"
+import AvatarMenu from './AvatarMenu';
+import Cookies from 'universal-cookie';
+
 
 const users = {id: 1, name: 'Users', href: "/"}
 const projects = {id: 2, name: 'Projects', href: "/projects/"}
 const issues = {id: 3, name: 'Issues', href: "/issues/"}
 const pages = [users, projects, issues];
-const settings = ['Profile', 'Logout'];
+
+const isAuthenticated = () => {
+  const cookies = new Cookies()
+  if (cookies.get('access')) {
+    return true
+  } else {
+    return false
+  }
+}
+
 
 const NavbarItem = ({name, href}) => {
   return (
-      <li className="nav-item active">
-          <Link className="nav-link" to={href}>{name}</Link>
-      </li>
+      <Link className="nav-link" to={href}>{name}</Link>
   )
 }
 
 const ResponsiveAppBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
-  };
-
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
   };
 
   return (
@@ -118,33 +114,10 @@ const ResponsiveAppBar = () => {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: '45px' }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
+            {isAuthenticated()?
+             <AvatarMenu/>: <Link to='/login'>Login</Link>
+            }
+            
           </Box>
         </Toolbar>
       </Container>
