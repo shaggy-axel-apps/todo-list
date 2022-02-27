@@ -23,11 +23,17 @@ const stringToColor = string => {
 
 
 const stringAvatar = name => {
+  let displayName = ''
+  if (name.split(' ').length === 2) {
+    displayName = `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`
+  } else {
+    displayName = `${name[0]}`
+  }
   return {
     sx: {
       bgcolor: stringToColor(name),
     },
-    children: `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`,
+    children: displayName,
   };
 }
 
