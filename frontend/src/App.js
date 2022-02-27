@@ -6,11 +6,11 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css';
 
 import ResponsiveAppBar from './components/NavBar';
-import Footer from './components/Footer';
 
 import UserList from './components/User';
 import ProjectList from './components/Project';
 import IssueList from './components/Issue';
+import Login from './components/Login';
 
 
 const BASE_URL = "http://127.0.0.1:8000/api/"
@@ -59,9 +59,10 @@ class App extends React.Component {
               element={<ProjectList projects={this.state.projects}/>}/>
             <Route path={'/issues/'}
               element={<IssueList issues={this.state.issues}/>}/>
+            <Route path={'/login/'}
+              element={<Login/>}/>
             <Route element={pageNotFound404}/>
           </Routes>
-        <Footer/>
         </BrowserRouter>
       </div>
     );
