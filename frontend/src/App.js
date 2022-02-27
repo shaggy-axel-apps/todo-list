@@ -31,9 +31,20 @@ class App extends React.Component {
       cookies: new Cookies(),
       users: [],
       projects: [],
-      issues: []
+      issues: [],
+      profile: {},
     };
   };
+
+  getProfile() {
+    const headers = this.getHeaders()
+    axios.get('http://127.0.0.1:8000/api/profile/', {headers}).then(
+        response => {
+            console.log(response)
+            this.setState({profile: response.data})
+        }
+    ).catch(error => {console.log(error.toString())})
+  }
 
   tokenExists() {
     if (this.state.cookies.get('access')) {
@@ -100,13 +111,15 @@ class App extends React.Component {
     axios.get(`${BASE_URL}issues/`, {headers}).then(response => {
       this.setState({"issues": response.data.results})
     }).catch(error => console.log(error))
+
+    this.getProfile()
   };
 
   render() {
     return (
       <div className={'App'}>
         <BrowserRouter>
-        <ResponsiveAppBar/>
+        <ResponsiveAppBar profile={this.state.profile}/>
           <Routes>
             <Route path={'/'}
               element={<UserList users={this.state.users}/>}/>

@@ -33,7 +33,7 @@ const NavbarItem = ({name, href}) => {
   )
 }
 
-const ResponsiveAppBar = () => {
+const ResponsiveAppBar = ({profile}) => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
 
   const handleOpenNavMenu = (event) => {
@@ -115,7 +115,7 @@ const ResponsiveAppBar = () => {
 
           <Box sx={{ flexGrow: 0 }}>
             {isAuthenticated()?
-             <AvatarMenu/>: <Link to='/login'>Login</Link>
+             <AvatarMenu profile={profile}/>: <Link to='/login'>Login</Link>
             }
             
           </Box>

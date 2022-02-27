@@ -39,7 +39,7 @@ const logout = () => {
     window.location.reload()
 }
 
-const AvatarMenu = () => {
+const AvatarMenu = ({profile}) => {
     const [anchorElUser, setAnchorElUser] = React.useState(null);
 
     const handleOpenUserMenu = (event) => {
@@ -50,11 +50,16 @@ const AvatarMenu = () => {
         setAnchorElUser(null);
     };
 
+    let fullName = "Anonimous User"
+    if (profile != null) {
+        fullName = `${profile.firstName} ${profile.lastName}`
+    }
+    console.log("PROFILE", profile)
     return (
         <Box>
             <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <Avatar {...stringAvatar("Ruslan Korneev")}/>
+                    <Avatar {...stringAvatar(fullName)}/>
                 </IconButton>
             </Tooltip>
             <Menu
