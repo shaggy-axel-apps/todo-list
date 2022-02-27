@@ -7,7 +7,7 @@ from rest_framework_simplejwt.views import (
     TokenVerifyView,
 )
 
-from apps.users.api.views import UserViewSet
+from apps.users.api.views import UserViewSet, UserDetailApiView
 from apps.projects.api.views import IssueViewSet, ProjectViewSet, LabelViewSet
 
 
@@ -26,4 +26,5 @@ urlpatterns = [
     path('api/token/verify/', TokenVerifyView.as_view(), name="token-verify"),
 
     path('api/', include(router.urls)),
+    path('api/profile/', UserDetailApiView.as_view(), name="user-profile"),
 ]
