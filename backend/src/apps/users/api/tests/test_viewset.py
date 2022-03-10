@@ -3,9 +3,7 @@ from django.test import TestCase
 
 from django.urls import reverse_lazy
 from rest_framework import status
-from rest_framework.test import APIRequestFactory, APIClient
-
-from apps.users.api.views import UserViewSet
+from rest_framework.test import APIClient
 
 
 User = get_user_model()
@@ -13,8 +11,10 @@ User = get_user_model()
 
 class TestUserViewSet(TestCase):
     def setUp(self):
-        self.factory = APIRequestFactory()
         self.client = APIClient()
+
+        self.admin = User.objects.create_superuser(
+            username="admin", password="admin123987")
 
         self.user_data = {
             "username": "testuser", "password": "testuser123",
@@ -27,16 +27,42 @@ class TestUserViewSet(TestCase):
             "email": "testuser1@gmail.com"}
 
     def test_get_users(self):
-        view = UserViewSet.as_view({'get': 'list'})
-        request = self.factory.get(reverse_lazy('users-list'))
-        response = view(request)
-        self.assertEquals(response.status_code, status.HTTP_200_OK, response.status_text)
+        response = self.client.get(reverse_lazy('users-list'))
+        self.assertEquals(response.status_code,
+                          status.HTTP_200_OK,
+                          response.status_text)
 
-    def test_post_users(self):
-        response = self.client.post(reverse_lazy('users-list'), data=self.user_data_for_create)
-        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
-        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+    def test_create_user(self):
+        response = self.client.post(
+            reverse_lazy('users-list'),
+            bytes(str(self.user_data_for_create), encoding="utf-8"),
+            content_type="application/json")
+        self.assertEqual(response.status_code,
+                         status.HTTP_405_METHOD_NOT_ALLOWED)
 
     def test_detail_user(self):
-        response = self.client.get(reverse_lazy('users-detail', kwargs={'pk': self.user.id}))
+        response = self.client.get(reverse_lazy(
+            'users-detail', kwargs={'pk': self.user.id}))
         self.assertEquals(response.status_code, status.HTTP_200_OK)
+
+    def test_update_user(self):
+        response = self.client.get(reverse_lazy(
+            'users-detail', kwargs={'pk': self.user.id}))
+        user_data = response.data
+
+        response = self.client.patch(
+            reverse_lazy('users-detail', kwargs={'pk': self.user.id}),
+            b'{"first_name": "Ruslan"}', content_type="application/json")
+        self.assertEquals(response.status_code,
+                          status.HTTP_200_OK,
+                          response.data)
+
+        updated_data = response.data
+        self.assertNotEquals(
+            user_data, updated_data,
+            "data was not updated")
+
+    def test_delete_user(self):
+        response = self.client.delete(reverse_lazy(
+            'users-detail', kwargs={'pk': self.user.id}))
+        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
