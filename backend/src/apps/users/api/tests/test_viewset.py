@@ -16,11 +16,11 @@ class TestUserViewSet(TestCase):
         self.factory = APIRequestFactory()
         self.client = APIClient()
 
-        self.user_data1 = {
+        self.user_data = {
             "username": "testuser", "password": "testuser123",
             "first_name": "Test", "last_name": "User",
             "email": "testuser@gmail.com"}
-        self.user1 = User.objects.create(**self.user_data1)
+        self.user = User.objects.create(**self.user_data)
 
         self.user_data_for_create = {
             "username": "testuser1", "password": "testuser123",
@@ -37,5 +37,5 @@ class TestUserViewSet(TestCase):
         self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
 
     def test_detail_user(self):
-        response = self.client.get(reverse_lazy('users-detail', kwargs={'pk': self.user1.id}))
+        response = self.client.get(reverse_lazy('users-detail', kwargs={'pk': self.user.id}))
         self.assertEquals(response.status_code, status.HTTP_200_OK)
