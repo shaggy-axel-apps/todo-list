@@ -12,10 +12,10 @@ from apps.projects.api.views import IssueViewSet, ProjectViewSet, LabelViewSet
 
 
 router = SimpleRouter()
-router.register('users', UserViewSet)
-router.register('issues', IssueViewSet)
-router.register('projects', ProjectViewSet)
-router.register('labels', LabelViewSet)
+router.register('users', UserViewSet, 'users')
+router.register('issues', IssueViewSet, 'issues')
+router.register('projects', ProjectViewSet, 'projects')
+router.register('labels', LabelViewSet, 'labels')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
