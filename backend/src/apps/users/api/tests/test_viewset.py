@@ -1,18 +1,15 @@
 from django.contrib.auth import get_user_model
-from django.test import TestCase
 
 from django.urls import reverse_lazy
 from rest_framework import status
-from rest_framework.test import APIClient
+from rest_framework.test import APITestCase
 
 
 User = get_user_model()
 
 
-class TestUserViewSet(TestCase):
+class TestUserViewSet(APITestCase):
     def setUp(self):
-        self.client = APIClient()
-
         self.admin = User.objects.create_superuser(
             username="admin", password="admin123987")
 

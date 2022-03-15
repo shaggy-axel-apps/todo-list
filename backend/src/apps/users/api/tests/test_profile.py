@@ -1,15 +1,14 @@
 from django.contrib.auth import get_user_model
-from django.test import TestCase
 
 from django.urls import reverse_lazy
 from rest_framework import status
-from rest_framework.test import APIClient
+from rest_framework.test import APITestCase
 
 
 User = get_user_model()
 
 
-class TestProfile(TestCase):
+class TestProfile(APITestCase):
     def setUp(self):
         self.user_data = {
             "username": "test_user", "email": "test_user@gmail.com",
@@ -17,7 +16,6 @@ class TestProfile(TestCase):
             "password": "testuser123"
         }
         self.user = User.objects.create_user(**self.user_data)
-        self.client = APIClient()
 
     def test_request_without_auth(self):
         data = {"first_name": "Ruslan"}
