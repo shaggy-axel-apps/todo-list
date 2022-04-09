@@ -1,6 +1,7 @@
 # ToDo-List App
 
-![Tests](https://github.com/shaggy-axel/todo-list/actions/workflows/linter.yml/badge.svg)
+![Linter](https://github.com/shaggy-axel/todo-list/actions/workflows/linter.yml/badge.svg)
+![Backend Tests](https://github.com/shaggy-axel/todo-list/actions/workflows/tests.yml/badge.svg)
 
 # Installation
 ```bash

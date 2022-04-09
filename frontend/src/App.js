@@ -40,7 +40,6 @@ class App extends React.Component {
     const headers = this.getHeaders()
     axios.get('http://127.0.0.1:8000/api/profile/', {headers}).then(
         response => {
-            console.log(response)
             this.setState({profile: response.data})
         }
     ).catch(error => {console.log(error.toString())})
@@ -59,7 +58,6 @@ class App extends React.Component {
       response => {
         const failed = "token_not_valid"
         if (response.data.code === failed) {
-          console.log(failed)
           return true
         }
         return false
@@ -69,7 +67,7 @@ class App extends React.Component {
 
   refreshToken() {
     const refresh = this.state.cookies.get("refresh")
-    console.log("REFRESH", refresh)
+
     axios.post(`${BASE_URL}token/refresh/`, {refresh: refresh}).then(
       response => {
         this.state.cookies.set('access', response.data.access)
@@ -87,7 +85,7 @@ class App extends React.Component {
     let headers = {
         'Content-Type': 'application/json'
     }
-    console.log(this.state.cookies.get("access"))
+
     if (this.tokenExists() && this.tokenExpired()) {
       this.refreshToken()
       headers['Authorization'] = `Bearer ${this.state.cookies.get("access")}`
