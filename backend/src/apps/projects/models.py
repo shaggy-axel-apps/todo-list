@@ -34,7 +34,7 @@ class Issue(models.Model):
     assignees = models.ManyToManyField(User)
     is_open = models.BooleanField(default=True)
     created = models.DateTimeField(
-            auto_created=True, default=datetime.now)
+        auto_created=True, default=datetime.now)
     closed = models.DateTimeField(null=True, blank=True)
 
     def __str__(self) -> str:

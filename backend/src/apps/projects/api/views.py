@@ -1,4 +1,5 @@
 from datetime import datetime
+
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
@@ -8,7 +9,7 @@ from apps.users.api.serializers import UserSerializer
 from apps.projects.models import Issue, Project, Label
 from .filters import IssueFilter, ProjectFilter
 from .serializers import (
-        IssueSerializer, ProjectSerializer, LabelSerializer)
+    IssueSerializer, ProjectSerializer, LabelSerializer)
 from .paginations import ProjectPagination, IssuePagination
 from .permissions import IsOwnerOrReadOnly, IsPublicOrDenied
 
