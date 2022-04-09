@@ -17,7 +17,7 @@ class TestUserViewSet(APITestCase):
             "username": "testuser", "password": "testuser123",
             "first_name": "Test", "last_name": "User",
             "email": "testuser@gmail.com"}
-        self.user = User.objects.create(**self.user_data)
+        self.user = User.objects.create_user(**self.user_data)
 
         self.user_data_for_create = {
             "username": "testuser1", "password": "testuser123",
