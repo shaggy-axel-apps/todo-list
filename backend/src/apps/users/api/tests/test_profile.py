@@ -22,7 +22,7 @@ class TestProfile(APITestCase):
         # before login
         response = self.client.get(reverse_lazy('user-profile'))
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED, response.data)
-        response = self.client.patch(reverse_lazy('user-profile'), data)
+        response = self.client.patch(reverse_lazy('user-profile'), data, format="json")
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED, response.data)
 
         # after login

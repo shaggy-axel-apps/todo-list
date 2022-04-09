@@ -32,8 +32,7 @@ class TestUserViewSet(APITestCase):
     def test_create_user(self):
         response = self.client.post(
             reverse_lazy('users-list'),
-            bytes(str(self.user_data_for_create), encoding="utf-8"),
-            content_type="application/json")
+            self.user_data_for_create, format="json")
         self.assertEqual(response.status_code,
                          status.HTTP_405_METHOD_NOT_ALLOWED)
 
@@ -49,7 +48,7 @@ class TestUserViewSet(APITestCase):
 
         response = self.client.patch(
             reverse_lazy('users-detail', kwargs={'pk': self.user.id}),
-            b'{"first_name": "Ruslan"}', content_type="application/json")
+            {"first_name": "Ruslan"}, format="json")
         self.assertEquals(response.status_code,
                           status.HTTP_200_OK,
                           response.data)
