@@ -17,7 +17,7 @@ class Project(models.Model):
 
     def __str__(self) -> str:
         return self.title
-    
+
     class Meta:
         unique_together = ("title", "owner")
 
