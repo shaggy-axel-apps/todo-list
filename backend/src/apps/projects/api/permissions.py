@@ -7,7 +7,7 @@ class IsOwnerOrReadOnly(BasePermission):
         return request.user == obj.owner or request.method in SAFE_METHODS
 
 
-class IsPublicOrDenied(BasePermission):
+class IsPublicOrForbidden(BasePermission):
     """ The public project, or not allow """
     def has_object_permission(self, request, view, obj):
         return (
