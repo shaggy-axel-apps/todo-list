@@ -8,13 +8,17 @@ from apps.users.models import User
 
 class Project(models.Model):
     title = models.CharField(max_length=64)
-    repository = models.URLField("Link to Repository")
-    contributors = models.ManyToManyField(User)
-    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name="owner")
+    repository = models.URLField("Link to Repository", unique=True)
+    contributors = models.ManyToManyField(User, blank=True)
+    owner = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="owner", blank=True)
     is_public = models.BooleanField(default=True)
 
     def __str__(self) -> str:
         return self.title
+    
+    class Meta:
+        unique_together = ("title", "owner")
 
 
 class Label(models.Model):
@@ -40,3 +44,11 @@ class Issue(models.Model):
 
     def __str__(self) -> str:
         return f"{self.project.title} - {self.title}"
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['title', 'project'],
+                condition=models.Q(is_open=True),
+                name='unique_title_repository_isopen')
+        ]
