@@ -9,9 +9,10 @@ from apps.users.models import User
 class Project(models.Model):
     title = models.CharField(max_length=64)
     repository = models.URLField("Link to Repository", unique=True)
-    contributors = models.ManyToManyField(User, blank=True)
+    contributors = models.ManyToManyField(User, null=True, blank=True)
     owner = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name="owner", blank=True)
+        User, on_delete=models.CASCADE, related_name="owner",
+        blank=True)
     is_public = models.BooleanField(default=True)
 
     def __str__(self) -> str:
