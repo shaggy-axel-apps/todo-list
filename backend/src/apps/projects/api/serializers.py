@@ -5,8 +5,8 @@ from apps.users.api.serializers import UserSerializer
 
 
 class ProjectSerializer(ModelSerializer):
-    contributors = UserSerializer(many=True)
-    owner = UserSerializer()
+    contributors = UserSerializer(many=True, required=False)
+    owner = UserSerializer(read_only=True)
 
     class Meta:
         model = Project
@@ -20,12 +20,13 @@ class LabelSerializer(ModelSerializer):
 
 
 class IssueSerializer(ModelSerializer):
+    owner = UserSerializer(read_only=True)
+    assignees = UserSerializer(many=True, required=False)
     project = ProjectSerializer()
-    assignees = UserSerializer(many=True)
     labels = LabelSerializer(many=True)
 
     class Meta:
         model = Issue
         fields = (
             'title', 'description', 'project',
-            'is_open', 'assignees', 'labels')
+            'is_open', 'owner', 'assignees', 'labels')
