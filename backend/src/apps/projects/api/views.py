@@ -2,16 +2,15 @@ from datetime import datetime
 
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.viewsets import ModelViewSet
 
-from apps.users.api.serializers import UserSerializer
 from apps.projects.models import Issue, Project, Label
 from .filters import IssueFilter, ProjectFilter
 from .serializers import (
     IssueSerializer, ProjectSerializer, LabelSerializer)
 from .paginations import ProjectPagination, IssuePagination
-from .permissions import IsOwnerOrReadOnly, IsPublicOrDenied
+from .permissions import IsOwnerOrReadOnly, IsPublicOrForbidden
 
 
 class IssueViewSet(ModelViewSet):
@@ -19,7 +18,7 @@ class IssueViewSet(ModelViewSet):
     serializer_class = IssueSerializer
     pagination_class = IssuePagination
     filterset_class = IssueFilter
-    permission_class = AllowAny
+    permission_class = IsAuthenticatedOrReadOnly
 
     def destroy(self, request, *args, **kwargs) -> Response:
         instance = self.get_object()
@@ -30,9 +29,9 @@ class IssueViewSet(ModelViewSet):
         return Response(
             data=serializer.data, status=status.HTTP_200_OK)
 
-    def create(self, request, *args, **kwargs):
-        request.data['owner'] = UserSerializer(request.user).data
-        return super().create(request, *args, **kwargs)
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
+        return super().perform_create(serializer)
 
 
 class ProjectViewSet(ModelViewSet):
@@ -40,11 +39,13 @@ class ProjectViewSet(ModelViewSet):
     serializer_class = ProjectSerializer
     pagination_class = ProjectPagination
     filterset_class = ProjectFilter
-    permission_classes = (IsOwnerOrReadOnly, IsPublicOrDenied)
+    permission_classes = (
+        IsOwnerOrReadOnly, IsPublicOrForbidden
+    )
 
-    def create(self, request, *args, **kwargs):
-        request.data['owner'] = UserSerializer(request.user).data
-        return super().create(request, *args, **kwargs)
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
+        return super().perform_create(serializer)
 
 
 class LabelViewSet(ModelViewSet):
