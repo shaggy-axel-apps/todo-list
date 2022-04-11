@@ -47,6 +47,4 @@ class IssueSerializer(ModelSerializer):
 
     class Meta:
         model = Issue
-        fields = (
-            'title', 'description', 'project',
-            'is_open', 'owner', 'assignees', 'labels')
+        exclude = ('id', 'created', 'closed')

@@ -26,8 +26,7 @@ class IssueViewSet(ModelViewSet):
         instance.closed = datetime.now()
         instance.save()
         serializer = self.serializer_class(instance)
-        return Response(
-            data=serializer.data, status=status.HTTP_200_OK)
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
@@ -39,9 +38,7 @@ class ProjectViewSet(ModelViewSet):
     serializer_class = ProjectSerializer
     pagination_class = ProjectPagination
     filterset_class = ProjectFilter
-    permission_classes = (
-        IsOwnerOrReadOnly, IsPublicOrForbidden
-    )
+    permission_classes = IsOwnerOrReadOnly, IsPublicOrForbidden
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
