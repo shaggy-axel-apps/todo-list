@@ -13,17 +13,37 @@ class ProjectSerializer(ModelSerializer):
         exclude = ('id',)
 
 
+class ProjectShortSerializer(ModelSerializer):
+    class Meta:
+        model = Project
+        fields = ('repository',)
+
+    def validate_repository(self, value: str):
+        if not value.startswith(("http://", "https://")):
+            raise ValidationError("project repository url invalid", code="invalid")
+        domain = value.replace("http://", "").replace("https://", "").split('/')[0]
+        if domain not in ("github.com", "gitlab.com", "bitbucket.com"):
+            raise ValidationError("project repository url invalid", code="invalid")
+        return value
+
+
 class LabelSerializer(ModelSerializer):
     class Meta:
         model = Label
         exclude = ('id',)
 
 
+class LabelShortSerializer(ModelSerializer):
+    class Meta:
+        model = Label
+        fields = ('title',)
+
+
 class IssueSerializer(ModelSerializer):
-    owner = UserSerializer(read_only=True)
-    assignees = UserSerializer(many=True, required=False)
-    project = ProjectSerializer()
-    labels = LabelSerializer(many=True)
+    owner = UserShortSerializer(read_only=True)
+    assignees = UserShortSerializer(many=True, required=False)
+    project = ProjectShortSerializer()
+    labels = LabelShortSerializer(many=True, required=False)
 
     class Meta:
         model = Issue

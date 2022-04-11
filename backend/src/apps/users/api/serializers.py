@@ -3,6 +3,12 @@ from rest_framework.serializers import ModelSerializer
 from apps.users.models import User
 
 
+class UserShortSerializer(ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('email',)
+
+
 class UserSerializer(ModelSerializer):
     class Meta:
         model = User
