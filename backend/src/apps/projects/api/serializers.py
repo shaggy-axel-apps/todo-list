@@ -1,12 +1,12 @@
-from rest_framework.serializers import ModelSerializer
+from rest_framework.serializers import ModelSerializer, ValidationError
 
 from apps.projects.models import Issue, Project, Label
-from apps.users.api.serializers import UserSerializer
+from apps.users.api.serializers import UserShortSerializer
 
 
 class ProjectSerializer(ModelSerializer):
-    contributors = UserSerializer(many=True, required=False)
-    owner = UserSerializer(read_only=True)
+    contributors = UserShortSerializer(many=True, required=False)
+    owner = UserShortSerializer(read_only=True)
 
     class Meta:
         model = Project
