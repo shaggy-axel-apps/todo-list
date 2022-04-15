@@ -1,3 +1,4 @@
+import re
 from rest_framework.serializers import ModelSerializer, ValidationError
 
 from apps.projects.models import Issue, Project, Label
@@ -19,10 +20,13 @@ class ProjectShortSerializer(ModelSerializer):
         fields = ('repository',)
 
     def validate_repository(self, value: str):
-        if not value.startswith(("http://", "https://")):
-            raise ValidationError("project repository url invalid", code="invalid")
-        domain = value.replace("http://", "").replace("https://", "").split('/')[0]
-        if domain not in ("github.com", "gitlab.com", "bitbucket.com"):
+        repo_url_pattern = re.compile(
+            r"((http|https):\/\/)"
+            r"(git(hub|lab)\.com|bitbucket\.org)\/"
+            r"[a-zA-Z\d](?:[a-zA-Z\d]|-(?=[a-zA-Z\d])){0,38}\/"
+            r"[a-zA-Z\d](?:[a-zA-Z\d]|-(?=[a-zA-Z\d])){0,38}\/?"
+        )
+        if not re.fullmatch(repo_url_pattern, value):
             raise ValidationError("project repository url invalid", code="invalid")
         return value
 
