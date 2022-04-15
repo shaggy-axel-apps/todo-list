@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     # my apps
     'apps.users',
     'apps.projects',
+    'apps.api_auth',
 ]
 
 MIDDLEWARE = [
